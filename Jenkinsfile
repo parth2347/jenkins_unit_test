@@ -22,8 +22,8 @@ pipeline {
 }
 
 def pipInstall(String requirementsFileName, String destinationPath,directory){
-
-    sh "${PATH}:${directory} pip install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
+    sh "sudo apt-get install python-setuptools"
+    sh "pip install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
     //Install from Pypi server also possible
 }
 
