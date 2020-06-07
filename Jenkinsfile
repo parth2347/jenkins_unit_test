@@ -23,7 +23,7 @@ pipeline {
 
 def pipInstall(String requirementsFileName, String destinationPath,directory){
 
-    sh "PATH = ${PATH}:${directory} pip install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
+    sh "${PATH}:${directory} pip install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
     //Install from Pypi server also possible
 }
 
