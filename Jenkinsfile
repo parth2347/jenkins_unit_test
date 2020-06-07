@@ -12,7 +12,7 @@ pipeline {
                     dir("${workspace}/test_packages"){
                         String requirementsFilePath = "${workspace}/requirements.txt"
                         String destinationPath = "${workspace}/test_packages/"
-                        pipInstall(requirementsFilePath,destinationPath)
+                        pipInstall(requirementsFilePath,destinationPath,"${workspace}/test_packages")
                         main_pytest_command("${workspace}")
                     }
                }
@@ -21,9 +21,9 @@ pipeline {
    }
 }
 
-def pipInstall(String requirementsFileName, String destinationPath){
+def pipInstall(String requirementsFileName, String destinationPath,directory){
 
-    sh "pip install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
+    sh "PATH = ${PATH}:${directory} pip install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
     //Install from Pypi server also possible
 }
 
