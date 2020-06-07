@@ -31,6 +31,6 @@ def main_pytest_command(String directory){
     dir(directory)
     {
         //writeFile file: ".coveragerc", text: """[run] omit=**/test_packages/*"""
-        sh "python -m pytest"
+        sh "PATH = ${PATH}:${directory} python -m pytest"
     }
 }
