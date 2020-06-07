@@ -1,11 +1,10 @@
 pipeline {
-   agent any
+   agent docker { image 'python:3.7.2' }
    stages {
       stage('unit testing'){
           steps{
                println("Unit testing started...")
                script{
-
                     workspace = pwd()
                     project = "jenkins_unit_test"
                     project_path = "${workspace}/${project}"
@@ -32,6 +31,6 @@ def main_pytest_command(String directory){
     dir(directory)
     {
         //writeFile file: ".coveragerc", text: """[run] omit=**/test_packages/*"""
-        sh "python -m pytest "
+        sh "python -m pytest"
     }
 }
