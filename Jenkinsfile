@@ -22,7 +22,6 @@ pipeline {
 }
 
 def pipInstall(String requirementsFileName, String destinationPath,directory){
-    sh "sudo apt-get install python-setuptools"
     sh "pip install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
     //Install from Pypi server also possible
 }
@@ -31,6 +30,6 @@ def main_pytest_command(String directory){
     dir(directory)
     {
         //writeFile file: ".coveragerc", text: """[run] omit=**/test_packages/*"""
-        sh "PATH = ${PATH}:${directory} python -m pytest"
+        sh "python -m pytest"
     }
 }
