@@ -1,3 +1,4 @@
+workspace = ""
 pipeline {
    agent any
    stages {
@@ -7,12 +8,11 @@ pipeline {
                script{
                     workspace = pwd()
                     project = "jenkins_unit_test"
-                    project_path = "${workspace}/${project}"
 
                     dir("${workspace}/test_packages"){
                         String requirementsFilePath = "${workspace}/requirements.txt"
                         String destinationPath = "${workspace}/test_packages/"
-                        pipInstall(requirementsFilePath,destinationPath,"${workspace}/test_packages")
+                        pipInstall(requirementsFilePath,destinationPath)
                         main_pytest_command("${workspace}")
                     }
                }
@@ -21,8 +21,8 @@ pipeline {
    }
 }
 
-def pipInstall(String requirementsFileName, String destinationPath,directory){
-    sh "pip install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
+def pipInstall(String requirementsFileName, String destinationPath){
+    sh "pip3 install -r ${requirementsFileName} -t ${destinationPath} >/dev/null"
     //Install from Pypi server also possible
 }
 
@@ -30,6 +30,7 @@ def main_pytest_command(String directory){
     dir(directory)
     {
         //writeFile file: ".coveragerc", text: """[run] omit=**/test_packages/*"""
-        sh "python -m pytest"
+            //sh "set Path=%PATH%;${directory}"
+            sh "pytest -v --ignore=test_packages --continue-on-collection-errors"
     }
 }
