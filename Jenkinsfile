@@ -31,13 +31,11 @@ def main_pytest_command(String directory){
     {
             writeFile file: ".coveragerc", text: """[run] omit=**/test_packages/*"""
             //sh "set Path=%PATH%;${directory}"
-            def command = sh script: """pytest -v --junitxml=report.xml - o junit_family=xunit2 
-                          --cov-config = ${directory}/.coveragerc --cov = ${directory} --cov-report=xml --ignore=test_packages 
-                          --continue-on-collection-errors """
+            def command = sh script: """pytest --continue-on-collection-errors --junitxml=report.xml -o junit_family=xunit2 --cov-config=${directory}/.coveragerc --cov=${directory} --cov-report=xml --ignore=test_packages"""
             
        if(fileExists("${directory}/coverage.xml")){
          cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
-          xunit([Junita(deleteOutputFiles: true,failIfNotNew: true, pattern: '**/report.xml', skipNoTestFiles: false, stopProcessingIfError: false)])       
+          xunit([JUnit(deleteOutputFiles: true,failIfNotNew: true, pattern: '**/report.xml', skipNoTestFiles: false, stopProcessingIfError: false)])       
        }
     }
 }
