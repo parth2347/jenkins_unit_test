@@ -29,8 +29,10 @@ def pipInstall(String requirementsFileName, String destinationPath){
 def main_pytest_command(String directory){
     dir(directory)
     {
-        //writeFile file: ".coveragerc", text: """[run] omit=**/test_packages/*"""
+            writeFile file: ".coveragerc", text: """[run] omit=**/test_packages/*"""
             //sh "set Path=%PATH%;${directory}"
-            sh "pytest -v --ignore=test_packages --continue-on-collection-errors"
+            def command = sh script """pytest -v --junitxml=report.xml - o junit_family=xunit2 
+                          --cov-config = ${directory}/.coveragerc --cov = ${directory} --cov-report=xml --ignore=test_packages 
+                          --continue-on-collection-errors """
     }
 }
