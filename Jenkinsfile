@@ -31,7 +31,7 @@ def main_pytest_command(String directory){
     {
             writeFile file: ".coveragerc", text: """[run] omit=**/test_packages/*"""
             //sh "set Path=%PATH%;${directory}"
-            def command = sh script: """pytest --continue-on-collection-errors --junitxml=report.xml -o junit_family=xunit2 --cov-config=${directory}/.coveragerc --cov=${directory} --cov-report=xml --ignore=test_packages"""
+            def command = sh script: """pytest -v --continue-on-collection-errors --junitxml=report.xml -o junit_family=xunit2 --cov-config=${directory}/.coveragerc --cov=${directory} --cov-report=xml --ignore=test_packages"""
             
        if(fileExists("${directory}/coverage.xml")){
          cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: '**/coverage.xml', failUnhealthy: false, failUnstable: false, maxNumberOfBuilds: 0, onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
