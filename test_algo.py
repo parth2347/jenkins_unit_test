@@ -12,3 +12,8 @@ def test_max():
 
     val = algo.max(values)
     assert val == 6
+
+def test_fib():
+    assert fib(0) == 0
+    assert fib(1) == 10
+    assert fib(10) == 55
